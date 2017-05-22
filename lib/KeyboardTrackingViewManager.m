@@ -79,6 +79,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 
 @property (nonatomic, strong) UIScrollView *scrollViewToManage;
 @property (nonatomic) BOOL scrollIsInverted;
+@property (nonatomic) BOOL viewIsInsideTabBar;
 @property (nonatomic) BOOL revealKeyboardInteractive;
 @property (nonatomic) BOOL isDraggingScrollView;
 @property (nonatomic) BOOL manageScrollView;
@@ -93,7 +94,15 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 
 @end
 
-@implementation KeyboardTrackingView
+@implementation KeyboardTrackingView {
+    BOOL _viewIsInsideTabBar;
+}
+
+- (void)setViewIsInsideTabBar:(BOOL)viewIsInsideTabBar
+{
+  _viewIsInsideTabBar = viewIsInsideTabBar;
+  [ObservingInputAccessoryView sharedInstance].viewIsInsideTabBar = _viewIsInsideTabBar;
+}
 
 -(instancetype)init
 {
@@ -441,6 +450,8 @@ RCT_ENUM_CONVERTER(KeyboardTrackingScrollBehavior, (@{ @"KeyboardTrackingScrollB
 @synthesize bridge = _bridge;
 
 RCT_EXPORT_MODULE()
+
+RCT_EXPORT_VIEW_PROPERTY(viewIsInsideTabBar, BOOL);
 
 RCT_REMAP_VIEW_PROPERTY(scrollBehavior, scrollBehavior, KeyboardTrackingScrollBehavior)
 RCT_REMAP_VIEW_PROPERTY(revealKeyboardInteractive, revealKeyboardInteractive, BOOL)

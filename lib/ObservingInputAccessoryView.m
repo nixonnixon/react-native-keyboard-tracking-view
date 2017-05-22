@@ -8,6 +8,8 @@
 
 #import "ObservingInputAccessoryView.h"
 
+NSUInteger const kTabbarHeight = 49;
+
 @implementation ObservingInputAccessoryView
 {
     CGFloat _previousKeyboardHeight;
@@ -85,6 +87,10 @@
         
         _previousKeyboardHeight = _keyboardHeight;
 		_keyboardHeight = MAX(0, self.window.bounds.size.height - (centerY - boundsH / 2) - self.intrinsicContentSize.height);
+        
+        if (self.viewIsInsideTabBar) {
+            _keyboardHeight = _keyboardHeight - kTabbarHeight;
+        }
 		
 		[self.delegate observingInputAccessoryViewDidChangeFrame:self];
 	}
