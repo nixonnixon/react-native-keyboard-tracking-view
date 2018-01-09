@@ -31,6 +31,7 @@ typedef NS_ENUM(NSUInteger, KeyboardState) {
 
 +(ObservingInputAccessoryView*)sharedInstance;
 
+@property (nonatomic) BOOL viewIsInsideTabBar;
 @property (nonatomic, weak) id<ObservingInputAccessoryViewDelegate> delegate;
 @property (nonatomic) CGFloat height;
 @property (nonatomic, readonly) CGFloat keyboardHeight;
